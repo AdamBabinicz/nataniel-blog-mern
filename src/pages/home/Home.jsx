@@ -1,10 +1,10 @@
-import React from "react";
-import Categories from "../../components/categories/Categories";
-import FeaturedBlogs from "../../components/featuredBlogs/FeaturedBlogs";
-import Navbar from "../../components/navbar/Navbar";
-import Newsletter from "../../components/newsletter/Newsletter";
-import Footer from "../../components/footer/Footer";
-import classes from "./home.module.css";
+import React from 'react'
+import Categories from '../../components/categories/Categories'
+import FeaturedBlogs from '../../components/featuredBlogs/FeaturedBlogs'
+import Footer from '../../components/footer/Footer'
+import Navbar from '../../components/navbar/Navbar'
+import Newsletter from '../../components/newsletter/Newsletter'
+import classes from './home.module.css'
 
 const Home = () => {
   return (
@@ -15,7 +15,7 @@ const Home = () => {
       <Newsletter />
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

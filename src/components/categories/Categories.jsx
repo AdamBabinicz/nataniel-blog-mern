@@ -1,55 +1,54 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { request } from "../../utils/fetchApi";
-import { format } from "timeago.js";
-import { Link } from "react-router-dom";
-import classes from "./categories.module.css";
-import { MdOutlinePreview } from "react-icons/md";
-import { AiFillLike } from "react-icons/ai";
-import { FiArrowRight } from "react-icons/fi";
+import React from 'react'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { request } from '../../utils/fetchApi'
+import { format } from 'timeago.js'
+import { Link } from 'react-router-dom'
+import classes from './categories.module.css'
+import { MdOutlinePreview } from 'react-icons/md'
+import { AiFillLike } from 'react-icons/ai'
+import { FiArrowRight } from 'react-icons/fi'
 
 const Categories = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [filteredBlogs, setFilteredBlogs] = useState([]);
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [blogs, setBlogs] = useState([])
+  const [filteredBlogs, setFilteredBlogs] = useState([])
+  const [activeCategory, setActiveCategory] = useState('all')
   const categories = [
-    "all",
-    "nature",
-    "music",
-    "travel",
-    "design",
-    "programming",
-    "fun",
-    "fashion",
-  ];
+    'all',
+    'nature',
+    'music',
+    'travel',
+    'design',
+    'programming',
+    'fun',
+    'fashion'
+  ]
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const data = await request("/blog/getAll", "GET");
-        setBlogs(data);
-        setFilteredBlogs(data);
+        const data = await request('/blog/getAll', 'GET')
+        setBlogs(data)
+        setFilteredBlogs(data)
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
-    };
-    fetchBlogs();
-  }, []);
+    }
+    fetchBlogs()
+  }, [])
 
   useEffect(() => {
-    if (activeCategory === "all") {
-      setFilteredBlogs(blogs);
+    if(activeCategory === 'all'){
+      setFilteredBlogs(blogs)
     } else {
       setFilteredBlogs((prev) => {
-        const filteredBlogs = blogs.filter(
-          (blog) => blog.category.toLowerCase() === activeCategory.toLowerCase()
-        );
+        const filteredBlogs = blogs.filter((blog) => blog.category.toLowerCase() === activeCategory.toLowerCase())
 
-        return filteredBlogs;
-      });
+        return filteredBlogs
+      })
     }
-  }, [activeCategory]);
+  }, [activeCategory])
+
 
   return (
     <div className={classes.container}>
@@ -60,16 +59,14 @@ const Categories = () => {
             {categories.map((category) => (
               <span
                 key={crypto.randomUUID()}
-                className={`${classes.category} ${
-                  activeCategory === category && classes.active
-                }`}
-                onClick={() => setActiveCategory((prev) => category)}
+                className={`${classes.category} ${activeCategory === category && classes.active}`}
+                onClick={() => setActiveCategory(prev => category)}
               >
                 {category}
               </span>
             ))}
           </div>
-          {filteredBlogs?.length > 0 ? (
+          {filteredBlogs?.length > 0 ?
             <div className={classes.blogs}>
               {filteredBlogs?.map((blog) => (
                 <div key={blog._id} className={classes.blog}>
@@ -87,32 +84,25 @@ const Categories = () => {
                       </div>
                     </div>
                     <h4>{blog?.title}</h4>
-                    <p className={classes.blogDesc}>{blog?.desc}</p>
+                    <p className={classes.blogDesc}>
+                      {blog?.desc}
+                    </p>
                     <div className={classes.authorAndCreatedAt}>
-                      <span>
-                        <span>Author:</span> {blog?.userId?.username}
-                      </span>
-                      <span>
-                        <span>Created:</span> {format(blog?.createdAt)}
-                      </span>
+                      <span><span>Author:</span> {blog?.userId?.username}</span>
+                      <span><span>Created:</span> {format(blog?.createdAt)}</span>
                     </div>
-                    <Link
-                      to={`/blogDetails/${blog._id}`}
-                      className={classes.readMore}
-                    >
+                    <Link to={`/blogDetails/${blog._id}`} className={classes.readMore}>
                       Read More <FiArrowRight />
                     </Link>
                   </div>
                 </div>
               ))}
             </div>
-          ) : (
-            <h3 className={classes.noBlogsMessage}>No blogs</h3>
-          )}
+            : <h3 className={classes.noBlogsMessage}>No blogs</h3>}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Categories;
+export default Categories
